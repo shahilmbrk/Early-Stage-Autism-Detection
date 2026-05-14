@@ -1,0 +1,147 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en" dir="ltr">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Attend Exam</title>#}
+{##}
+{#    <!-- Hope UI CSS -->#}
+{#    <link rel="stylesheet" href="/static/assets/css/core/libs.min.css">#}
+{#    <link rel="stylesheet" href="/static/assets/css/hope-ui.min.css?v=4.0.0">#}
+{#    <link rel="stylesheet" href="/static/assets/css/custom.min.css?v=4.0.0">#}
+{##}
+{#    <style>#}
+{#        body {#}
+{#            background: #f4f6f9;#}
+{#        }#}
+{#        .exam-card {#}
+{#            max-width: 750px;#}
+{#            margin: auto;#}
+{#        }#}
+{#        .question-box {#}
+{#            background: #eef2ff;#}
+{#            padding: 20px;#}
+{#            border-left: 5px solid #4f46e5;#}
+{#            border-radius: 8px;#}
+{#            font-size: 17px;#}
+{#        }#}
+{#        textarea {#}
+{#            resize: vertical;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<div class="container py-5">#}
+{##}
+{#    <div class="card exam-card shadow-lg">#}
+{#        <div class="card-header d-flex justify-content-between align-items-center">#}
+{#            <h4 class="mb-0">Attend Exam</h4>#}
+{##}
+{#            <!-- Optional Timer -->#}
+{#            <!-- <span id="timer" class="badge bg-danger p-2">10:00</span> -->#}
+{#        </div>#}
+{##}
+{#        <div class="card-body">#}
+{##}
+{#            <!-- Question Section -->#}
+{#            <h5>Question:</h5>#}
+{#            <div class="question-box mb-4">#}
+{#                {{ q.question }}#}
+{#            </div>#}
+{##}
+{#            <!-- Answer Form -->#}
+{#            <form method="post" action="/myapp/attend_exam/">#}
+{#                {% csrf_token %}#}
+{##}
+{#                <label class="form-label"><strong>Your Solution:</strong></label>#}
+{#                <textarea name="answer" class="form-control" rows="6" required placeholder="Type your answer here..."></textarea>#}
+{##}
+{#                <div class="text-end mt-4">#}
+{#                    <button type="submit" class="btn btn-primary px-4">#}
+{#                        Submit Answer#}
+{#                    </button>#}
+{#                </div>#}
+{#            </form>#}
+{##}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#</div>#}
+{##}
+{##}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attend Exam</title>
+
+    <link rel="stylesheet" href="/static/assets/css/core/libs.min.css">
+    <link rel="stylesheet" href="/static/assets/css/hope-ui.min.css?v=4.0.0">
+    <link rel="stylesheet" href="/static/assets/css/custom.min.css?v=4.0.0">
+
+    <style>
+        body { background: #f4f6f9; }
+        .exam-card { max-width: 800px; margin: auto; }
+        .question-box {
+            background: #eef2ff;
+            padding: 20px;
+            border-left: 5px solid #4f46e5;
+            border-radius: 8px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+
+    <div class="card exam-card shadow-lg">
+        <div class="card-header">
+            <h4>Attend Exam</h4>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Question -->
+            <h5><strong>Question:</strong></h5>
+            <div class="question-box mb-4">
+                {{ q.question }}
+            </div>
+
+            <!-- Result -->
+            {% if similarity_percent %}
+            <div class="alert alert-info">
+                <strong>Result:</strong><br>
+                Similarity: {{ similarity_percent }}% <br>
+                Mark: {{ mark }} <br>
+                Time Taken: {{ solving_time }} seconds <br>
+                Prediction: <strong>{{ prediction }}</strong>
+            </div>
+            {% endif %}
+
+            <!-- Answer Form -->
+            <form method="post" action="/myapp/attend_exam/">
+                {% csrf_token %}
+
+                <!-- hidden login id -->
+{#                <input type="hidden" name="lid" value="{{ request.session.lid }}">#}
+
+                <label class="form-label"><strong>Your Answer:</strong></label>
+                <textarea name="solution" class="form-control" rows="6" required></textarea>
+
+                <div class="text-end mt-4">
+                    <button type="submit" class="btn btn-primary px-4">Submit Answer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

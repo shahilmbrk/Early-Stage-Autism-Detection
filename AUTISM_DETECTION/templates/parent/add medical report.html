@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Medical Report</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/assets/images/favicon.ico">
+
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Hope UI -->
+    <link rel="stylesheet" href="/static/assets/css/core/libs.min.css">
+    <link rel="stylesheet" href="/static/assets/css/hope-ui.min.css?v=4.0.0">
+    <link rel="stylesheet" href="/static/assets/css/custom.min.css?v=4.0.0">
+
+    <style>
+        body {
+            background: #f5f7fb;
+        }
+
+        .card {
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .btn-primary i {
+            margin-right: 6px;
+        }
+    </style>
+
+</head>
+
+<body style="background: #0f172a;">
+
+    <main class="main-content">
+        <div class="container mt-5">
+
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+
+                    <div class="card">
+
+                        <h4 class="mb-3">
+                            <i class="fas fa-file-medical me-2"></i>
+                            Add Medical Report
+                        </h4>
+
+                        <!-- Flash messages -->
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                            {{ message }}
+                            <button class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <form action="/myapp/add_medical_report/" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label class="form-label">Upload Report File</label>
+                                <input type="file" name="file" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Details / Notes</label>
+                                <textarea name="details" class="form-control" rows="4" placeholder="Enter report details..." required></textarea>
+                            </div>
+
+{#                            <div class="mb-3">#}
+{#                                <label class="form-label">Date</label>#}
+{#                                <input type="date" name="date" class="form-control" required>#}
+{#                            </div>#}
+
+                            <div class="text-end">
+                                <a href="/myapp/view_student/" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </a>
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Report
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="/static/assets/js/core/libs.min.js"></script>
+    <script src="/static/assets/js/core/external.min.js"></script>
+    <script src="/static/assets/js/hope-ui.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autism Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f6f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 6px;
+            border: 1px solid #999;
+        }
+        .question-card {
+            background: #f2f2f2;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            margin-top: 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+        .btn:hover { background: #0056b3; }
+
+        .result {
+            font-size: 22px;
+            color: blue;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body style="background: #0f172a;">
+
+<div class="container">
+
+    <h2>Autism Prediction</h2>
+
+    <label>Age</label>
+    <input type="number" id="age">
+
+    <label>Sex</label>
+    <select id="sex">
+        <option value="m">Male</option>
+        <option value="f">Female</option>
+    </select>
+
+    <label>Jaundice</label>
+    <select id="jaundice">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+    </select>
+
+    <label>Family ASD</label>
+    <select id="family_asd">
+        <option value="no">No</option>
+        <option value="yes">Yes</option>
+    </select>
+
+    <label>Upload Video</label>
+    <input type="file" id="video" accept="video/*">
+
+    <h3>Questions</h3>
+
+    <div id="questions-container"></div>
+
+    <button class="btn" onclick="sendData()">Predict Autism</button>
+
+    <div class="result" id="resultBox">Result: </div>
+
+</div>
+
+<script>
+const questions = [
+  // Social Interaction
+  "Does your child respond when their name is called?",
+  "Does your child smile back when someone smiles at them?",
+  "Does your child enjoy playing with other children?",
+  "Does your child make eye contact during play or interaction?",
+  "Does your child try to get your attention to show something?",
+  "Does your child look at you when you point to an object?",
+  "Does your child enjoy being hugged or held?",
+  "Does your child copy actions like clapping or waving?",
+  "Does your child show interest in people around them?",
+  "Does your child try to join group play activities?",
+
+  // Communication Skills
+  "Does your child use words or sounds to express needs?",
+  "Does your child point to objects they want?",
+  "Does your child try to imitate words spoken by others?",
+  "Does your child respond to simple verbal instructions?",
+  "Does your child use gestures like waving or nodding?",
+  "Does your child repeat the same words or sounds frequently?",
+  "Does your child talk more when excited or happy?",
+  "Does your child combine two or more words meaningfully?",
+  "Does your child communicate using facial expressions?",
+  "Does your child attempt to start communication on their own?",
+
+  // Repetitive Behavior and Routine
+  "Does your child get upset when daily routines change?",
+  "Does your child insist on doing things in a specific order?",
+  "Does your child repeat the same actions again and again?",
+  "Does your child line up toys instead of playing with them?",
+  "Does your child focus on one toy for a long time?",
+  "Does your child get distressed if a favorite activity stops?",
+  "Does your child repeat the same game or activity daily?",
+  "Does your child show unusual attachment to certain objects?",
+  "Does your child become upset by small changes?",
+  "Does your child prefer familiar activities over new ones?",
+
+  // Sensory Sensitivity
+  "Does your child react strongly to loud noises?",
+  "Does your child avoid certain textures or fabrics?",
+  "Does your child notice small sounds that others ignore?",
+  "Does your child dislike bright lights or crowded places?",
+  "Does your child cover their ears in noisy environments?",
+  "Does your child enjoy spinning or watching moving objects?",
+  "Does your child react unusually to smells or tastes?",
+  "Does your child resist haircuts or nail trimming?",
+  "Does your child seek sensory stimulation like touching objects repeatedly?",
+  "Does your child show unusual reactions to temperature changes?",
+
+  // Play, Emotion, and Attention
+  "Does your child engage in pretend play such as feeding dolls?",
+  "Does your child play imaginatively with toys?",
+  "Does your child prefer playing alone rather than with others?",
+  "Does your child understand simple emotions like happy or sad?",
+  "Does your child seek comfort from parents when upset?",
+  "Does your child show frustration easily?",
+  "Does your child maintain attention during play?",
+  "Does your child switch between activities easily?",
+  "Does your child show interest in new toys or games?",
+  "Does your child respond appropriately to others’ emotions?"
+];
+
+const container = document.getElementById("questions-container");
+
+questions.forEach((q, index) => {
+    const div = document.createElement("div");
+    div.className = "question-card";
+    div.innerHTML = `
+        <p><b>Q${index + 1}:</b> ${q}</p>
+        <label><input type="radio" name="q${index}" value="1" checked> Definitely Agree</label><br>
+        <label><input type="radio" name="q${index}" value="2"> Slightly Agree</label><br>
+        <label><input type="radio" name="q${index}" value="3"> Slightly Disagree</label><br>
+        <label><input type="radio" name="q${index}" value="4"> Definitely Disagree</label>
+    `;
+    container.appendChild(div);
+});
+
+// ------------ SEND DATA ---------------
+async function sendData() {
+    const age = document.getElementById("age").value;
+    const sex = document.getElementById("sex").value;
+    const jaundice = document.getElementById("jaundice").value;
+    const family_asd = document.getElementById("family_asd").value;
+    const video = document.getElementById("video").files[0];
+
+    if (!video) {
+        alert("Please select a video");
+        return;
+    }
+
+    let answers = [];
+    for (let i = 0; i < 50; i++) {
+        const val = document.querySelector(`input[name="q${i}"]:checked`).value;
+        answers.push(parseInt(val));
+    }
+
+    let formData = new FormData();
+    formData.append("age", age);
+    formData.append("sex", sex);
+    formData.append("jaundice", jaundice);
+    formData.append("family_asd", family_asd);
+    formData.append("answers", JSON.stringify(answers));
+    formData.append("video", video);
+
+    // Change your backend URL here:
+    const url = "http://127.0.0.1:8000/myapp/predict_autism_video/";
+
+    const response = await fetch(url, {
+        method: "POST",
+        body: formData
+    });
+
+    const result = await response.json();
+    document.getElementById("resultBox").innerHTML =
+        "Result: " + (result.prediction || "No result");
+}
+</script>
+
+</body>
+</html>

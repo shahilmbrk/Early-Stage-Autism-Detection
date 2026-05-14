@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Audio</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 480px;
+            background: #fff;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .upload-box {
+            border: 2px dashed #4a90e2;
+            padding: 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #f0f7ff;
+            transition: 0.3s ease;
+        }
+
+        .upload-box:hover {
+            background: #e6f1ff;
+        }
+
+        .upload-box p {
+            margin: 0;
+            color: #4a90e2;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            margin-top: 25px;
+            background: #4a90e2;
+            padding: 12px 35px;
+            border: none;
+            color: white;
+            font-size: 17px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #357ac8;
+        }
+
+        .msg {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+
+    <script>
+        function previewAudio(event) {
+            let audio = document.getElementById("audioPreview");
+            let file = event.target.files[0];
+
+            if (file) {
+                let url = URL.createObjectURL(file);
+                audio.src = url;
+                audio.style.display = "block";
+            }
+        }
+
+        function triggerUpload() {
+            document.getElementById("audio").click();
+        }
+    </script>
+
+</head>
+<body style="background: #0f172a;">
+
+<div class="container">
+    <h2>Upload Audio for Detection</h2>
+
+    <div class="upload-box" onclick="triggerUpload()">
+        <p>Click here to choose an audio file</p>
+    </div>
+
+    <form action="/myapp/check_autism/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input id="audio" type="file" name="file" accept="audio/*" onchange="previewAudio(event)" required>
+
+        <audio id="audioPreview" controls></audio>
+
+        <button type="submit" class="btn">Upload & Detect</button>
+    </form>
+
+    {% if msg %}
+        <div class="msg success">
+            <b>Prediction:</b> {{ msg }} <br>
+            <b>Accuracy Score:</b> {{ accuracy }}%
+        </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

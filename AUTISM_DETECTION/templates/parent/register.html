@@ -1,0 +1,529 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Parent Registration</title>#}
+{##}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#            background: #f0f2f5;#}
+{#            display: flex;#}
+{#            justify-content: center;#}
+{#            align-items: center;#}
+{#            height: 100vh;#}
+{#            margin: 0;#}
+{#        }#}
+{##}
+{#        .container {#}
+{#            background: #fff;#}
+{#            padding: 30px 40px;#}
+{#            width: 380px;#}
+{#            border-radius: 10px;#}
+{#            box-shadow: 0 4px 12px rgba(0,0,0,0.1);#}
+{#        }#}
+{##}
+{#        h2 {#}
+{#            text-align: center;#}
+{#            margin-bottom: 25px;#}
+{#            color: #333;#}
+{#        }#}
+{##}
+{#        label {#}
+{#            font-weight: bold;#}
+{#            display: block;#}
+{#            margin-top: 15px;#}
+{#        }#}
+{##}
+{#        input, select {#}
+{#            width: 100%;#}
+{#            padding: 10px;#}
+{#            margin-top: 6px;#}
+{#            border-radius: 6px;#}
+{#            border: 1px solid #ccc;#}
+{#        }#}
+{##}
+{#        button {#}
+{#            width: 100%;#}
+{#            margin-top: 20px;#}
+{#            padding: 12px;#}
+{#            background: #4A4AFF;#}
+{#            color: #fff;#}
+{#            border: none;#}
+{#            border-radius: 6px;#}
+{#            font-size: 16px;#}
+{#            cursor: pointer;#}
+{#        }#}
+{##}
+{#        button:hover {#}
+{#            background: #1f1fff;#}
+{#        }#}
+{##}
+{#        .login-link {#}
+{#            text-align: center;#}
+{#            margin-top: 15px;#}
+{#        }#}
+{##}
+{#        .login-link a {#}
+{#            color: #4A4AFF;#}
+{#            text-decoration: none;#}
+{#        }#}
+{##}
+{#        .login-link a:hover {#}
+{#            text-decoration: underline;#}
+{#        }#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<div class="container">#}
+{#    <h2>Parent Registration</h2>#}
+{##}
+{#    <form method="post" action="/myapp/register/">#}
+{#        {% csrf_token %}#}
+{##}
+{#        <label>Name</label>#}
+{#        <input type="text" name="name" required>#}
+{##}
+{#        <label>Email</label>#}
+{#        <input type="email" name="email" required>#}
+{##}
+{#        <label>Phone</label>#}
+{#        <input type="text" name="phone" required>#}
+{##}
+{#        <label>Place</label>#}
+{#        <input type="text" name="place" required>#}
+{##}
+{#        <label>District</label>#}
+{#        <input type="text" name="district" required>#}
+{##}
+{#        <label>Username</label>#}
+{#        <input type="text" name="username" required>#}
+{##}
+{#        <label>Password</label>#}
+{#        <input type="password" name="password" required>#}
+{##}
+{#        <button type="submit">Register</button>#}
+{##}
+{#        <div class="login-link">#}
+{#            Already have an account? <a href="/myapp/login_get/">Login</a>#}
+{#        </div>#}
+{#    </form>#}
+{#</div>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Registration - Autism Detection</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            transform: rotate(-15deg);
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: rotate(-15deg) translateX(0) translateY(0); }
+            100% { transform: rotate(-15deg) translateX(50px) translateY(50px); }
+        }
+
+        /* Glowing orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            animation: orbFloat 15s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 3s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, -40px) scale(1.15); }
+        }
+
+        .container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            padding: 45px 50px;
+            width: 100%;
+            max-width: 520px;
+            border-radius: 24px;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 25px 70px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Top accent line */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #3b82f6, #8b5cf6, transparent);
+            border-radius: 24px 24px 0 0;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #f1f5f9;
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 10px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.6);
+            color: #f1f5f9;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(15, 23, 42, 0.9);
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, 0.1),
+                0 0 20px rgba(59, 130, 246, 0.3);
+            transform: translateY(-2px);
+        }
+
+        input:focus + label, select:focus + label {
+            color: #60a5fa;
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+
+        select option {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 16px;
+            background: linear-gradient(135deg, #0f203b, #010811);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .login-link a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .login-link a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+
+        .login-link a:hover::before {
+            width: 100%;
+        }
+
+        .login-link a:hover {
+            color: #a78bfa;
+            transform: translateX(3px);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 35px 30px;
+                max-width: 100%;
+            }
+
+            h2 {
+                font-size: 1.7rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .orb {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 30px 25px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 25px;
+            }
+
+            input, select, button {
+                padding: 12px 16px;
+            }
+
+            body::before {
+                background-size: 30px 30px;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(4, 43, 114, 0.4);
+            }
+            50% {
+                box-shadow: 0 10px 40px rgba(15, 61, 139, 0.7);
+            }
+        }
+
+        button {
+            animation: glow 2s infinite;
+        }
+
+        /* Input validation styles */
+        input:valid {
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        input:invalid:not(:placeholder-shown) {
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+        <h2>Parent Registration</h2>
+
+        <form method="post" action="/myapp/register/">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" name="phone" placeholder="Enter phone number" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Enter your email address" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Place</label>
+                    <input type="text" name="place" placeholder="Enter your place" required>
+                </div>
+
+                <div class="form-group">
+                    <label>District</label>
+                    <input type="text" name="district" placeholder="Enter your district" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Choose a username" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Create a strong password" required>
+            </div>
+
+            <button type="submit">Register Now</button>
+
+            <div class="login-link">
+                Already have an account? <a href="/myapp/login_get/">Login here</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

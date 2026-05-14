@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Autism Detection</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/assets/images/favicon.ico">
+
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- jQuery & DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+    <!-- Hope UI & Custom Styles -->
+    <link rel="stylesheet" href="/static/assets/css/core/libs.min.css">
+    <link rel="stylesheet" href="/static/assets/vendor/aos/dist/aos.css">
+    <link rel="stylesheet" href="/static/assets/css/hope-ui.min.css?v=4.0.0">
+    <link rel="stylesheet" href="/static/assets/css/custom.min.css?v=4.0.0">
+    <link rel="stylesheet" href="/static/assets/css/dark.min.css">
+    <link rel="stylesheet" href="/static/assets/css/customizer.min.css">
+    <link rel="stylesheet" href="/static/assets/css/rtl.min.css">
+
+</head>
+
+<body style="background: #0f172a;">
+
+<br><br><br>
+
+<main class="main-content">
+    <div class="container-fluid content-inner mt-n5 py-0">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+
+                    <!-- Header -->
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="card-title mb-0">Study Materials</h4>
+
+                        <a href="/myapp/parenthome/" class="btn btn-outline-primary">
+                            <i class="bi bi-house-fill"></i> Home
+                        </a>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- Flash Messages -->
+                        {% if messages %}
+                        <div class="container mt-3">
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Table -->
+                        <div class="table-responsive">
+                            <table id="example" class="table table-bordered table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Date</th>
+                                        <th>Title</th>
+                                        <th>File</th>
+                                        <th>Expert</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for i in data %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ i.date }}</td>
+                                        <td>{{ i.title }}</td>
+                                        <td>
+                                            <a href="/media/{{ i.file }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                <i class="fa fa-file"></i> View
+                                            </a>
+                                        </td>
+                                        <td>{{ i.EXPERT.name }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- DataTable Script -->
+                        <script>
+                            $(document).ready(function () {
+                                $('#example').DataTable({
+                                    "pageLength": 5,
+                                    "lengthMenu": [5, 10, 20, 50],
+                                    "ordering": true
+                                });
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+{#    <footer class="footer">#}
+{#        <div class="footer-body d-flex justify-content-between">#}
+{#            <ul class="list-inline mb-0">#}
+{#                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>#}
+{#                <li class="list-inline-item"><a href="#">Terms of Use</a></li>#}
+{#            </ul>#}
+{#            <div>#}
+{#                © <script>document.write(new Date().getFullYear())</script> Hope UI#}
+{#            </div>#}
+{#        </div>#}
+{#    </footer>#}
+</main>
+
+<!-- Scripts -->
+<script src="/static/assets/js/core/libs.min.js"></script>
+<script src="/static/assets/js/core/external.min.js"></script>
+<script src="/static/assets/js/hope-ui.js" defer></script>
+
+</body>
+</html>

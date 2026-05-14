@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Autism Assessment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .container {
+        background: #ffffff;
+        width: 100%;
+        max-width: 800px;
+        border-radius: 12px;
+        padding: 35px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    .section-title {
+        margin-top: 30px;
+        margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #555;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 5px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+
+    .question {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        background: #f9f9f9;
+        border-left: 5px solid #667eea;
+    }
+
+    .question p {
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .btn {
+        margin-top: 30px;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Autism Spectrum Disorder Assessment</h2>
+
+    <form method="post" action="/myapp/autism_question/">
+        {% csrf_token %}
+
+        <div class="section-title">Personal Information</div>
+        <div class="grid">
+            <input type="number" name="age" placeholder="Age" required>
+
+            <select name="sex">
+                <option value="m">Male</option>
+                <option value="f">Female</option>
+            </select>
+
+            <select name="jaundice">
+                <option value="no">No Jaundice</option>
+                <option value="yes">Jaundice</option>
+            </select>
+
+            <select name="family_asd">
+                <option value="no">No Family ASD</option>
+                <option value="yes">Family ASD</option>
+            </select>
+        </div>
+
+        <div class="section-title">Behavioral Questions</div>
+
+        {% for q in questions %}
+        <div class="question">
+            <p>{{ forloop.counter }}. {{ q }}</p>
+            <select name="ans{{ forloop.counter }}" required>
+                <option value="1">Definitely Agree</option>
+                <option value="2">Slightly Agree</option>
+                <option value="3">Slightly Disagree</option>
+                <option value="4">Definitely Disagree</option>
+            </select>
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn">Predict Autism Risk</button>
+    </form>
+</div>
+
+</body>
+</html>

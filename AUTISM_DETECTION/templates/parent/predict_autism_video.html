@@ -1,0 +1,177 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <title>Autism Prediction</title>#}
+{#</head>#}
+{#<body>#}
+{##}
+{#<h2>Autism Prediction Form</h2>#}
+{##}
+{#<form method="post" enctype="multipart/form-data">#}
+{#    {% csrf_token %}#}
+{##}
+{#    <label>Age:</label>#}
+{#    <input type="number" name="age" required><br><br>#}
+{##}
+{#    <label>Sex:</label>#}
+{#    <select name="sex">#}
+{#        <option value="m">Male</option>#}
+{#        <option value="f">Female</option>#}
+{#    </select><br><br>#}
+{##}
+{#    <label>Jaundice:</label>#}
+{#    <select name="jaundice">#}
+{#        <option value="no">No</option>#}
+{#        <option value="yes">Yes</option>#}
+{#    </select><br><br>#}
+{##}
+{#    <label>Family ASD:</label>#}
+{#    <select name="family_asd">#}
+{#        <option value="no">No</option>#}
+{#        <option value="yes">Yes</option>#}
+{#    </select><br><br>#}
+{##}
+{#    <label>Upload Video:</label>#}
+{#    <input type="file" name="video" accept="video/*" required><br><br>#}
+{##}
+{#    <h3>Answer All 50 Questions</h3>#}
+{##}
+{#    {% for q in questions %}#}
+{#        <label><b>Q{{ forloop.counter }}:</b> {{ q }}</label><br>#}
+{##}
+{#        <select name="ans{{ forloop.counter }}" required>#}
+{#            <option value="1">Definitely Agree</option>#}
+{#            <option value="2">Slightly Agree</option>#}
+{#            <option value="3">Slightly Disagree</option>#}
+{#            <option value="4">Definitely Disagree</option>#}
+{#        </select>#}
+{##}
+{#        <br><br>#}
+{#    {% endfor %}#}
+{##}
+{#    <button type="submit">Predict</button>#}
+{#</form>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autism Prediction</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            padding: 30px;
+        }
+
+        .container {
+            width: 70%;
+            margin: auto;
+            background: #fff;
+            padding: 25px 40px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9fafc;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+
+<body style="background: #0f172a;">
+
+<div class="container">
+    <h2>Autism Prediction Form</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Basic Details -->
+        <label>Age:</label>
+        <input type="number" name="age" required><br><br>
+
+        <label>Sex:</label>
+        <select name="sex" required>
+            <option value="m">Male</option>
+            <option value="f">Female</option>
+        </select><br><br>
+
+        <label>Jaundice:</label>
+        <select name="jaundice" required>
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+        </select><br><br>
+
+        <label>Family ASD:</label>
+        <select name="family_asd" required>
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+        </select><br><br>
+
+        <label>Upload Video:</label>
+        <input type="file" name="video" accept="video/*" required><br><br>
+
+        <h3>Answer All 50 Questions</h3>
+
+        {% for q in questions %}
+        <div class="question-block">
+            <label><b>Q{{ forloop.counter }}:</b> {{ q }}</label><br>
+            <select name="ans{{ forloop.counter }}" required>
+                <option value="1">Definitely Agree</option>
+                <option value="2">Slightly Agree</option>
+                <option value="3">Slightly Disagree</option>
+                <option value="4">Definitely Disagree</option>
+            </select>
+        </div>
+        {% endfor %}
+
+        <button type="submit">Predict</button>
+    </form>
+</div>
+
+</body>
+</html>

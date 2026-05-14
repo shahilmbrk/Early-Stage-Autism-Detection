@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Autism Prediction Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
+        }
+
+        .result-card {
+            background: #ffffff;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+
+        .result-card h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .result-box {
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            background: #f5f7ff;
+            color: #444;
+            border-left: 6px solid #667eea;
+        }
+
+        .note {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .btn {
+            margin-top: 30px;
+            display: inline-block;
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="result-card">
+    <h2>Autism Prediction Result</h2>
+
+    <div class="result-box">
+        Questionnaire Result:<br><br>
+        {{ qna }}
+    </div>
+
+    <p class="note">
+        This result is generated using a machine learning model and is for screening purposes only.
+        Please consult a medical professional for a clinical diagnosis.
+    </p>
+
+{#    <a href="/myapp/autism_question/" class="btn">Take Test Again</a>#}
+</div>
+
+</body>
+</html>

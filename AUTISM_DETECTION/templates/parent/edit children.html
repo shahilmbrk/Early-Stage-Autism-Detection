@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Child</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: #fff;
+            padding: 30px;
+            width: 380px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            background: #4A4AFF;
+            padding: 12px;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1f1fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Update Child</h2>
+
+    <form method="post" action="/myapp/edit_children/" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Child Name</label>
+        <input type="text" name="name" required value="{{ data.name }}">
+
+        <label>Age</label>
+        <input type="number" name="age" min="1" required value="{{ data.age }}">
+
+        <label>Photo</label>
+        <img src="/media/{{ data.photo }}" height="100" width="100">
+        <input type="file" name="photo" accept="image/*">
+
+        <button type="submit">Add Child</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#    <title>Upload Image</title>#}
+{##}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#            background: #eef2f7;#}
+{#            margin: 0;#}
+{#            padding: 0;#}
+{#        }#}
+{##}
+{#        .container {#}
+{#            width: 90%;#}
+{#            max-width: 480px;#}
+{#            background: #fff;#}
+{#            margin: 40px auto;#}
+{#            padding: 30px;#}
+{#            border-radius: 14px;#}
+{#            box-shadow: 0px 4px 20px rgba(0,0,0,0.12);#}
+{#            text-align: center;#}
+{#        }#}
+{##}
+{#        h2 {#}
+{#            margin-bottom: 20px;#}
+{#            color: #333;#}
+{#            font-size: 24px;#}
+{#        }#}
+{##}
+{#        /* Clickable upload box */#}
+{#        .upload-box {#}
+{#            border: 2px dashed #4a90e2;#}
+{#            padding: 25px;#}
+{#            border-radius: 10px;#}
+{#            cursor: pointer;#}
+{#            background: #f0f7ff;#}
+{#            transition: 0.3s ease;#}
+{#        }#}
+{##}
+{#        .upload-box:hover {#}
+{#            background: #e6f1ff;#}
+{#        }#}
+{##}
+{#        .upload-box p {#}
+{#            margin: 0;#}
+{#            color: #4a90e2;#}
+{#            font-size: 16px;#}
+{#            font-weight: bold;#}
+{#        }#}
+{##}
+{#        input[type="file"] {#}
+{#            display: none;#}
+{#        }#}
+{##}
+{#        /* Preview Image */#}
+{#        #preview {#}
+{#            width: 100%;#}
+{#            margin-top: 15px;#}
+{#            display: none;#}
+{#            border-radius: 10px;#}
+{#        }#}
+{##}
+{#        .btn {#}
+{#            margin-top: 25px;#}
+{#            background: #4a90e2;#}
+{#            padding: 12px 35px;#}
+{#            border: none;#}
+{#            color: white;#}
+{#            font-size: 17px;#}
+{#            border-radius: 6px;#}
+{#            cursor: pointer;#}
+{#            transition: 0.2s ease;#}
+{#        }#}
+{##}
+{#        .btn:hover {#}
+{#            background: #357ac8;#}
+{#        }#}
+{##}
+{#        /* Message Box */#}
+{#        .msg {#}
+{#            margin-top: 20px;#}
+{#            padding: 15px;#}
+{#            border-radius: 8px;#}
+{#            font-size: 16px;#}
+{#            text-align: left;#}
+{#        }#}
+{##}
+{#        .success {#}
+{#            background-color: #d4edda;#}
+{#            color: #155724;#}
+{#        }#}
+{##}
+{#        .error {#}
+{#            background-color: #f8d7da;#}
+{#            color: #721c24;#}
+{#        }#}
+{#    </style>#}
+{##}
+{#    <script>#}
+{#        function previewImage(event) {#}
+{#            let reader = new FileReader();#}
+{#            reader.onload = function(){#}
+{#                let output = document.getElementById('preview');#}
+{#                output.src = reader.result;#}
+{#                output.style.display = "block";#}
+{#            };#}
+{#            reader.readAsDataURL(event.target.files[0]);#}
+{#        }#}
+{##}
+{#        function triggerUpload() {#}
+{#            document.getElementById("photo").click();#}
+{#        }#}
+{#    </script>#}
+{##}
+{#</head>#}
+{#<body style="background: #0f172a;">#}
+{##}
+{#<div class="container">#}
+{#    <h2>Upload Image for Detection</h2>#}
+{##}
+{#    <!-- Clickable Upload Box -->#}
+{#    <div class="upload-box" onclick="triggerUpload()">#}
+{#        <p>Click here to choose an image</p>#}
+{#    </div>#}
+{##}
+{#    <form action="/myapp/user_check/" method="POST" enctype="multipart/form-data">#}
+{#        {% csrf_token %}#}
+{##}
+{#        <input id="photo" type="file" name="photo" accept="image/*" onchange="previewImage(event)" required>#}
+{##}
+{#        <img id="preview" alt="Image Preview">#}
+{##}
+{#        <button type="submit" class="btn">Upload & Check</button>#}
+{#    </form>#}
+{##}
+{#    {% if msg %}#}
+{#        <div class="msg success">#}
+{#            <b>Prediction:</b> {{ msg.0 }} <br>#}
+{#            <b>Accuracy:</b> {{ msg.1 }}#}
+{#        </div>#}
+{#    {% endif %}#}
+{##}
+{#</div>#}
+{##}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Image</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 480px;
+            background: #fff;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+
+        .upload-box {
+            border: 2px dashed #4a90e2;
+            padding: 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #f0f7ff;
+        }
+
+        .upload-box p {
+            color: #4a90e2;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        #preview {
+            width: 100%;
+            margin-top: 15px;
+            display: none;
+            border-radius: 10px;
+        }
+
+        .btn {
+            margin-top: 25px;
+            background: #4a90e2;
+            padding: 12px 35px;
+            border: none;
+            color: white;
+            font-size: 17px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .msg {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #eaf4ff;
+            text-align: left;
+        }
+    </style>
+
+    <script>
+        function previewImage(event) {
+            let reader = new FileReader();
+            reader.onload = function(){
+                let img = document.getElementById('preview');
+                img.src = reader.result;
+                img.style.display = "block";
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function triggerUpload() {
+            document.getElementById("photo").click();
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Upload Image for Detection</h2>
+
+    <div class="upload-box" onclick="triggerUpload()">
+        <p>Click here to choose image</p>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input id="photo" type="file" name="photo"
+               accept="image/*" onchange="previewImage(event)" required>
+
+        <img id="preview">
+
+        <button type="submit" class="btn">Upload & Check</button>
+    </form>
+
+    {% if label %}
+    <div class="msg">
+{#        <b>Prediction:</b> {{ label }} <br>#}
+{#        <b>Confidence:</b> {{ confidence }} <br>#}
+{#            <b>Accuracy:</b> {{ accuracy  }}#}
+        {% if autism == "YES" %}
+            <b>Autism:</b> <span style="color:red;">YES</span>
+        {% elif autism == "Invalid" %}
+             <span style="color:red;">INVALID IMAGE</span>
+       {% else %}
+            <b>Autism:</b> <span style="color:green;">NO</span>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
